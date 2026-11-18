@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIRDROP UC — PUBG Mobile UC Airdrop Tezligida!</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Rajdhani (Esports / Gaming font) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        gaming: ['Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        airdrop: {
+                            bg: '#0b100d',
+                            card: '#131c17',
+                            cardHover: '#1c2822',
+                            gold: '#f59e0b',
+                            red: '#e11d48',
+                            blue: '#0ea5e9',
+                            pubgOrange: '#ff8c00',
+                            pubgYellow: '#fbbf24',
+                            pubgGreen: '#1b4332'
+                        }
+                    },
+                    animation: {
+                        'float-drop': 'floatDrop 4s ease-in-out infinite',
+                        'smoke-pulse': 'smokePulse 5s ease-in-out infinite',
+                        'radar-sweep': 'radarSweep 4s linear infinite',
+                    },
+                    keyframes: {
+                        floatDrop: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-12px) rotate(1.5deg)' },
+                        },
+                        smokePulse: {
+                            '0%, 100%': { opacity: '0.35', transform: 'scale(1)' },
+                            '50%': { opacity: '0.65', transform: 'scale(1.08)' },
+                        },
+                        radarSweep: {
+                            '0%': { transform: 'rotate(0deg)' },
+                            '100%': { transform: 'rotate(360deg)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0b100d;
+            color: #f1f5f9;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(27, 67, 50, 0.35) 0%, transparent 45%),
+                radial-gradient(circle at 85% 25%, rgba(255, 140, 0, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 50% 85%, rgba(225, 29, 72, 0.1) 0%, transparent 50%);
+        }
+
+        /* Enhanced Esports / Gaming Typography Style */
+        .gaming-title {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.12em;
+            text-shadow: 0 0 20px rgba(255, 140, 0, 0.35);
+        }
+
+        /* PUBG Tactical Camo Grid & HUD Lines */
+        .bg-tactical-grid {
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 140, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 140, 0, 0.03) 1px, transparent 1px);
+        }
+
+        /* PUBG Angular HUD Frame Style */
+        .pubg-hud-box {
+            position: relative;
+            background: #131c17;
+            border: 1px solid rgba(255, 140, 0, 0.35);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.85), 0 8px 30px rgba(0, 0, 0, 0.6);
+            clip-path: polygon(
+                0 0, 
+                calc(100% - 12px) 0, 
+                100% 12px, 
+                100% 100%, 
+                12px 100%, 
+                0 calc(100% - 12px)
+            );
+        }
+        .pubg-hud-box::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; width: 12px; height: 12px;
+            background: #ff8c00;
+            clip-path: polygon(100% 0, 0 0, 100% 100%);
+        }
+
+        .pubg-btn {
+            position: relative;
+            background: linear-gradient(135deg, #ff8c00 0%, #fbbf24 100%);
+            color: #0b100d;
+            font-weight: 800;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.35);
+        }
+        .pubg-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(255, 140, 0, 0.65);
+            background: linear-gradient(135deg, #ffa31a, #fcd34d);
+        }
+        .pubg-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b100d;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1b4332;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff8c00;
+        }
+
+        .glow-orange {
+            box-shadow: 0 0 25px rgba(255, 140, 0, 0.3);
+        }
+
+        /* Selected UC Package Card */
+        .uc-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+        .uc-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 140, 0, 0.6);
+            box-shadow: 0 10px 25px -5px rgba(255, 140, 0, 0.25);
+        }
+        .uc-card.selected {
+            border-color: #ff8c00;
+            background: linear-gradient(155deg, rgba(255, 140, 0, 0.2) 0%, rgba(19, 28, 23, 0.98) 100%);
+            box-shadow: 0 0 30px rgba(255, 140, 0, 0.45);
+            transform: translateY(-2px);
+        }
+
+        /* Selected Payment Method Card */
+        .payment-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+        .payment-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(14, 165, 233, 0.6);
+            box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.2);
+        }
+        .payment-card.selected {
+            border-color: #0ea5e9;
+            background: linear-gradient(155deg, rgba(14, 165, 233, 0.2) 0%, rgba(19, 28, 23, 0.98) 100%);
+            box-shadow: 0 0 25px rgba(14, 165, 233, 0.4);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-orange-500 selection:text-black bg-tactical-grid min-h-screen flex flex-col">
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="fixed top-24 right-4 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none"></div>
+
+    <!-- TOP PROMO BANNER (PUBG Orange / Military Theme) -->
+    <div class="bg-gradient-to-r from-amber-600 via-orange-500 to-yellow-500 text-slate-950 py-2 px-4 text-center text-xs sm:text-sm font-extrabold tracking-widest relative z-50 shadow-md">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-3">
+            <span class="inline-flex items-center gap-1.5 bg-[#0b100d] text-orange-400 px-2.5 py-0.5 rounded text-[11px] uppercase tracking-wider font-gaming">
+                <i class="fa-solid fa-shield-halved"></i> Halollik foydadan ustun
+            </span>
+            <span class="gaming-title uppercase font-black"><code class="bg-black/20 px-1.5 py-0.5 rounded font-mono font-black text-black">AIRDROP10</code> promokodi bilan 10% chegirma!</span>
+            <button onclick="quickApplyPromo('AIRDROP10')" class="underline hover:text-white transition-colors ml-1 font-black cursor-pointer uppercase font-gaming">
+                Qo'llash &rarr;
+            </button>
+        </div>
+    </div>
+
+    <!-- 1. HEADER & BRANDING -->
+    <header class="sticky top-0 z-40 bg-[#0b100d]/95 backdrop-blur-md border-b border-orange-500/25">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                
+                <!-- PUBG Logo & Airdrop Crate -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="relative w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500/30 via-emerald-600/20 to-amber-500/30 border border-orange-500/60 flex items-center justify-center shadow-lg glow-orange group-hover:scale-105 transition-transform">
+                        <svg class="w-8 h-8" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 24C12 12.9543 20.9543 4 32 4C43.0457 4 52 12.9543 52 24H12Z" fill="url(#chuteGradPubg)"/>
+                            <rect x="20" y="38" width="24" height="20" rx="3" fill="#131c17" stroke="#ff8c00" stroke-width="2.5"/>
+                            <path d="M20 44H44" stroke="#e11d48" stroke-width="2.5"/>
+                            <path d="M26 38V58M38 38V58" stroke="#0ea5e9" stroke-width="2"/>
+                            <defs>
+                                <linearGradient id="chuteGradPubg" x1="12" y1="4" x2="52" y2="24" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#e11d48"/>
+                                    <stop offset="0.5" stop-color="#ff8c00"/>
+                                    <stop offset="1" stop-color="#0ea5e9"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="font-gaming font-extrabold text-2xl sm:text-[30px] tracking-[0.18em] text-white leading-none gaming-title">
+                            AIRDROP <span class="text-orange-400 drop-shadow-[0_0_12px_rgba(255,140,0,0.6)]">UC</span>
+                        </div>
+                        <span class="block text-[11px] text-orange-400/90 uppercase tracking-[0.25em] mt-1 font-gaming font-bold">PUBG MOBILE STORE</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-7">
+                    <a href="#store-section" class="text-sm font-gaming font-bold tracking-wider text-slate-300 hover:text-orange-400 transition-colors uppercase">UC Paketlar</a>
+                    <a href="#how-it-works" class="text-sm font-gaming font-bold tracking-wider text-slate-300 hover:text-orange-400 transition-colors uppercase">Qanday ishlaydi</a>
+                    <button onclick="openHistoryModal()" class="text-sm font-gaming font-bold tracking-wider text-slate-300 hover:text-orange-400 transition-colors uppercase">Xaridlar tarixi</button>
+                    <a href="#footer" class="text-sm font-gaming font-bold tracking-wider text-slate-300 hover:text-orange-400 transition-colors uppercase">Aloqa / Yordam</a>
+                </nav>
+
+                <!-- Right Actions -->
+                <div class="flex items-center gap-3">
+                    <button onclick="openHistoryModal()" class="flex items-center gap-2 bg-[#131c17] hover:bg-[#1c2822] border border-orange-500/40 hover:border-orange-500 text-white px-3.5 py-2 rounded-xl text-sm font-gaming font-bold tracking-wider transition-all">
+                        <i class="fa-solid fa-box-open text-orange-400"></i>
+                        <span class="hidden sm:inline">Xaridlarim</span>
+                        <span id="order-count-badge" class="bg-orange-500 text-black text-xs font-black px-1.5 py-0.5 rounded-md">0</span>
+                    </button>
+
+                    <!-- Mobile Menu Toggle -->
+                    <button onclick="toggleMobileMenu()" aria-label="Menyu" class="md:hidden p-2.5 rounded-xl bg-[#131c17] text-slate-300 hover:text-white border border-orange-500/40">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#131c17] border-b border-orange-500/30 px-4 pt-2 pb-4 space-y-1.5">
+            <a href="#store-section" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg text-base font-gaming font-bold tracking-wider text-slate-200 hover:bg-orange-500/10 hover:text-orange-400 uppercase">UC Paketlar</a>
+            <a href="#how-it-works" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg text-base font-gaming font-bold tracking-wider text-slate-200 hover:bg-orange-500/10 hover:text-orange-400 uppercase">Qanday ishlaydi</a>
+            <button onclick="toggleMobileMenu(); openHistoryModal();" class="w-full text-left block px-3 py-2.5 rounded-lg text-base font-gaming font-bold tracking-wider text-slate-200 hover:bg-orange-500/10 hover:text-orange-400 uppercase">Xaridlar tarixi</button>
+            <a href="#footer" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg text-base font-gaming font-bold tracking-wider text-slate-200 hover:bg-orange-500/10 hover:text-orange-400 uppercase">Aloqa / Yordam</a>
+        </div>
+    </header>
+
+    <!-- 2. HERO SECTION -->
+    <section class="relative overflow-hidden pt-10 pb-16 sm:pt-16 sm:pb-22 border-b border-orange-500/20">
+        <!-- PUBG Airdrop Smoke Ambient Glows -->
+        <div class="absolute -top-10 left-10 w-80 h-80 bg-emerald-600/15 blur-[140px] rounded-full pointer-events-none animate-smoke-pulse"></div>
+        <div class="absolute top-10 right-10 w-96 h-96 bg-orange-500/15 blur-[140px] rounded-full pointer-events-none animate-smoke-pulse"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                
+                <!-- Left Content -->
+                <div class="lg:col-span-7 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded bg-orange-500/10 border border-orange-500/40 text-orange-400 text-xs sm:text-sm font-bold mb-5 tracking-wider uppercase">
+                        <span class="w-2 h-2 rounded-full bg-orange-500 animate-ping"></span>
+                        AIRDROP FLARE SIGNAL • 24/7 AVTO-YETKAZISH
+                    </div>
+
+                    <h1 class="font-gaming font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white leading-[1.1] tracking-tight mb-5">
+                        PUBG MOBILE UC — <br class="hidden sm:block">
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-300 to-yellow-400">AIRDROP TEZLIGIDA</span> HISOBINGIZDA!
+                    </h1>
+
+                    <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed font-sans">
+                        Login va parol talab qilinmaydi! Faqat <span class="text-orange-400 font-bold">Player ID</span> kiriting va rasmiy UC paketlarini Click, Payme, Uzum yoki Humo/Uzcard orqali bir zumda qabul qiling.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="#store-section" class="w-full sm:w-auto px-8 py-4 pubg-btn text-base sm:text-lg flex items-center justify-center gap-2.5">
+                            <i class="fa-solid fa-parachute-box text-lg animate-bounce"></i>
+                            <span>UC BUYURTMA QILISH</span>
+                        </a>
+                        <a href="#how-it-works" class="w-full sm:w-auto px-7 py-4 rounded-xl bg-[#131c17] hover:bg-[#1c2822] text-white border border-orange-500/40 hover:border-orange-500 font-semibold text-base transition-all transform hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-circle-question text-orange-400"></i>
+                            <span>QANDAY ISHLAYDI?</span>
+                        </a>
+                    </div>
+
+                    <!-- Trust Badges -->
+                    <div class="grid grid-cols-3 gap-3 sm:gap-5 mt-10 pt-8 border-t border-orange-500/20 max-w-xl mx-auto lg:mx-0">
+                        <div class="flex flex-col sm:flex-row items-center gap-2.5 text-center sm:text-left">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-shield-check"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-white text-xs sm:text-sm">100% RASMIY</div>
+                                <div class="text-[11px] text-slate-400">Xavfsiz xizmat</div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row items-center gap-2.5 text-center sm:text-left">
+                            <div class="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/30 text-orange-400 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-white text-xs sm:text-sm">30 SODIYADA</div>
+                                <div class="text-[11px] text-slate-400">Avtomatik tizim</div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row items-center gap-2.5 text-center sm:text-left">
+                            <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-400 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-headset"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-white text-xs sm:text-sm">24/7 YORDAM</div>
+                                <div class="text-[11px] text-slate-400">Doimiy aloqa</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Airdrop Visual Crate HUD Card -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <div class="absolute -inset-2 bg-gradient-to-tr from-emerald-600 via-orange-500 to-sky-600 rounded-2xl blur-lg opacity-30"></div>
+                        
+                        <div class="pubg-hud-box p-6 sm:p-7 relative z-10">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="px-3 py-1 rounded bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> FLARE GUN ACTIVE
+                                </span>
+                                <span class="text-orange-400 font-gaming font-extrabold text-sm tracking-widest">MAP: ERANGEL</span>
+                            </div>
+
+                            <!-- Large Animated Airdrop Supply Crate Illustration -->
+                            <div class="flex flex-col items-center justify-center my-3 animate-float-drop">
+                                <svg class="w-40 h-40 drop-shadow-[0_12px_25px_rgba(255,140,0,0.4)]" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M26 56C26 26.1766 50.1766 2 80 2C109.823 2 134 26.1766 134 56H26Z" fill="url(#heroChutePubg)"/>
+                                    <path d="M52 56C52 26.1766 64.536 2 80 2C95.464 2 108 26.1766 108 56" stroke="#0b100d" stroke-width="3"/>
+                                    <line x1="32" y1="56" x2="54" y2="92" stroke="#94a3b8" stroke-width="2"/>
+                                    <line x1="54" y1="56" x2="64" y2="92" stroke="#94a3b8" stroke-width="2"/>
+                                    <line x1="106" y1="56" x2="96" y2="92" stroke="#94a3b8" stroke-width="2"/>
+                                    <line x1="128" y1="56" x2="106" y2="92" stroke="#94a3b8" stroke-width="2"/>
+                                    <rect x="46" y="92" width="68" height="54" rx="4" fill="#1b4332" stroke="#ff8c00" stroke-width="3"/>
+                                    <rect x="48" y="102" width="64" height="10" fill="#e11d48"/>
+                                    <rect x="48" y="126" width="64" height="8" fill="#0ea5e9"/>
+                                    <rect x="60" y="92" width="6" height="54" fill="#131c17"/>
+                                    <rect x="94" y="92" width="6" height="54" fill="#131c17"/>
+                                    <circle cx="80" cy="119" r="14" fill="#0b100d" stroke="#ff8c00" stroke-width="2.5"/>
+                                    <text x="80" y="124" text-anchor="middle" fill="#fbbf24" font-family="Rajdhani, sans-serif" font-weight="800" font-size="14">UC</text>
+                                    <defs>
+                                        <linearGradient id="heroChutePubg" x1="26" y1="2" x2="134" y2="56" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#e11d48"/>
+                                            <stop offset="0.5" stop-color="#ff8c00"/>
+                                            <stop offset="1" stop-color="#0ea5e9"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                                <div class="mt-2 font-gaming font-extrabold text-2xl text-white tracking-widest">AIRDROP SUPPLY</div>
+                                <div class="text-xs text-orange-400 font-semibold tracking-wider">ROYALE PASS &amp; CRATE OPENING</div>
+                            </div>
+
+                            <!-- Live Airdrop Delivery Feed -->
+                            <div class="mt-4 bg-[#0b100d] border border-orange-500/30 rounded-xl p-3.5 flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-lg bg-orange-500/20 border border-orange-500/40 text-orange-400 flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-parachute-box"></i>
+                                </div>
+                                <div class="text-xs overflow-hidden">
+                                    <div class="text-slate-400">Jonli Airdrop yetkazish:</div>
+                                    <div id="live-ticker" class="text-white font-semibold truncate">
+                                        ID: 5184***920 — <span class="text-orange-400">660 UC</span> muvaffaqiyatli tushdi!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 3, 4, 5. MAIN INTERACTIVE TOP-UP STORE -->
+    <main id="store-section" class="flex-grow py-12 sm:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="text-orange-400 text-xs font-bold uppercase tracking-widest bg-orange-500/10 px-3 py-1 rounded border border-orange-500/30">Tactic Store</span>
+                <h2 class="font-gaming font-extrabold text-3xl sm:text-4xl text-white uppercase tracking-wider mt-2">
+                    AIRDROP UC <span class="text-orange-400">DO'KONI</span>
+                </h2>
+                <p class="text-slate-300 text-sm sm:text-base mt-2">
+                    Player ID ni kiriting, kerakli UC paketini tanlang va 30 soniya ichida qabul qiling.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- LEFT COLUMN: STEPS 1, 2, 3 -->
+                <div class="lg:col-span-8 space-y-8">
+                    
+                    <!-- STEP 1: PLAYER ID VERIFICATION -->
+                    <div class="pubg-hud-box p-5 sm:p-7">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                            <div class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded bg-gradient-to-r from-orange-500 to-amber-400 text-black font-gaming font-black text-lg flex items-center justify-center">1</span>
+                                <div>
+                                    <h3 class="font-gaming font-bold text-xl sm:text-2xl text-white leading-none">PLAYER ID TEKSHIRUVI</h3>
+                                    <span class="text-[11px] text-orange-400/80 uppercase font-semibold">9–11 xonali PUBG Mobile ID</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2.5">
+                                <button onclick="openApiConfigModal()" class="text-xs px-2.5 py-1.5 rounded bg-[#0b100d] hover:bg-[#131c17] border border-orange-500/40 text-slate-300 hover:text-orange-400 font-medium transition-colors flex items-center gap-1.5" title="API / Proxy sozlamalari">
+                                    <i class="fa-solid fa-plug-circle-bolt text-emerald-400"></i>
+                                    <span class="hidden sm:inline">API Sozlamasi</span>
+                                </button>
+                                <button onclick="openIdHelpModal()" class="text-xs text-orange-400 hover:underline">
+                                    ID qayerda?
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Quick Sample Real-Looking IDs -->
+                        <div class="flex flex-wrap items-center gap-2 mb-4">
+                            <span class="text-xs text-slate-400">Tezkor test ID lar:</span>
+                            <button onclick="fillSampleId('5123456789')" class="text-xs px-2.5 py-1 rounded bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/30 text-orange-300 font-mono transition-colors">
+                                5123456789
+                            </button>
+                            <button onclick="fillSampleId('5892014421')" class="text-xs px-2.5 py-1 rounded bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/30 text-orange-300 font-mono transition-colors">
+                                5892014421
+                            </button>
+                            <button onclick="fillSampleId('5147890234')" class="text-xs px-2.5 py-1 rounded bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/30 text-orange-300 font-mono transition-colors">
+                                5147890234
+                            </button>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <div class="relative flex-grow">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-crosshairs text-orange-400"></i>
+                                </div>
+                                <input 
+                                    type="text" 
+                                    id="player-id-input" 
+                                    inputmode="numeric"
+                                    maxlength="11"
+                                    placeholder="Masalan: 5123456789" 
+                                    class="w-full bg-[#0b100d] border border-orange-500/30 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 rounded-xl pl-11 pr-4 py-3.5 text-white placeholder-slate-500 font-mono text-base sm:text-lg outline-none transition-all"
+                                >
+                            </div>
+                            <button 
+                                id="verify-btn"
+                                onclick="verifyPlayerId()" 
+                                class="px-6 py-3.5 pubg-btn flex items-center justify-center gap-2 shrink-0 text-sm sm:text-base font-black tracking-wide"
+                            >
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <span>TEKSHIRISH</span>
+                            </button>
+                        </div>
+
+                        <!-- Verified Player Profile Card -->
+                        <div id="player-result" class="hidden mt-4 p-4 rounded-xl bg-gradient-to-r from-emerald-500/10 via-orange-500/10 to-transparent border border-emerald-500/30 flex flex-wrap items-center justify-between gap-3">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-emerald-600 p-0.5 shrink-0 overflow-hidden">
+                                    <div id="player-avatar-box" class="w-full h-full bg-[#0b100d] rounded-[10px] flex items-center justify-center text-orange-400 font-gaming font-extrabold text-xl">
+                                        <i class="fa-solid fa-helmet-safety"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <span id="player-nickname" class="text-white font-bold text-base sm:text-lg tracking-wide">AIRDROP_HUNTER</span>
+                                        <span id="player-region-badge" class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 text-[10px] font-bold uppercase">Global / CIS</span>
+                                    </div>
+                                    <div class="text-xs text-slate-400 mt-0.5">
+                                        Player ID: <span id="verified-id-display" class="font-mono text-slate-200">5123456789</span> • <span id="verification-source-label" class="text-emerald-400">API orqali aniqlandi</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="px-3 py-1 rounded bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-bold shrink-0">
+                                Tasdiqlandi ✓
+                            </span>
+                        </div>
+
+                        <!-- Smart API Fallback / Manual Nickname Confirmation Box -->
+                        <div id="api-fallback-box" class="hidden mt-4 p-4 rounded-xl bg-orange-500/10 border border-orange-500/35 space-y-3">
+                            <div class="flex items-start gap-2.5 text-xs sm:text-sm text-orange-200">
+                                <i class="fa-solid fa-triangle-exclamation text-orange-400 mt-0.5"></i>
+                                <div>
+                                    <p class="font-semibold text-orange-300">Tashqi PUBG serveri brauzer so'rovini chekladi (CORS).</p>
+                                    <p class="text-slate-300 text-xs mt-0.5">
+                                        O'yin ichidagi nikingizni quyida bir bosishda tasdiqlang:
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex flex-col sm:flex-row gap-2">
+                                <input 
+                                    type="text" 
+                                    id="manual-nickname-input" 
+                                    placeholder="O'yin nikingizni yozing (masalan: TASHKENT_PRO)" 
+                                    class="flex-grow bg-[#0b100d] border border-orange-500/30 focus:border-orange-500 rounded-lg px-3.5 py-2 text-sm text-white outline-none"
+                                >
+                                <button onclick="confirmManualNickname()" class="px-4 py-2 pubg-btn text-xs sm:text-sm font-bold shrink-0">
+                                    NIKNI TASDIQLASH ✓
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div id="player-error" class="hidden mt-3 text-sm text-red-400 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <span>Iltimos, 9–11 ta raqamdan iborat to'g'ri PUBG Mobile Player ID kiriting.</span>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: SELECT UC PACKAGE -->
+                    <div class="pubg-hud-box p-5 sm:p-7">
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded bg-gradient-to-r from-orange-500 to-amber-400 text-black font-gaming font-black text-lg flex items-center justify-center">2</span>
+                                <h3 class="font-gaming font-bold text-xl sm:text-2xl text-white">UC PAKETINI TANLANG</h3>
+                            </div>
+                            <span class="text-xs text-orange-400/80 hidden sm:inline uppercase font-semibold">Bonus UC avtomatik qo'shiladi</span>
+                        </div>
+
+                        <!-- Packages Grid -->
+                        <div id="packages-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: PAYMENT METHOD -->
+                    <div class="pubg-hud-box p-5 sm:p-7">
+                        <div class="flex items-center gap-3 mb-5">
+                            <span class="w-8 h-8 rounded bg-gradient-to-r from-orange-500 to-amber-400 text-black font-gaming font-black text-lg flex items-center justify-center">3</span>
+                            <h3 class="font-gaming font-bold text-xl sm:text-2xl text-white">TO'LOV USULI VA TASDIQLASH</h3>
+                        </div>
+
+                        <div id="payment-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT COLUMN: CHECKOUT SUMMARY -->
+                <div class="lg:col-span-4 lg:sticky lg:top-24">
+                    <div class="pubg-hud-box border-orange-500/60 p-5 sm:p-7 glow-orange">
+                        <div class="flex items-center justify-between mb-5 pb-4 border-b border-orange-500/20">
+                            <div class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded bg-gradient-to-r from-orange-500 to-amber-400 text-black font-gaming font-black text-lg flex items-center justify-center">4</span>
+                                <h3 class="font-gaming font-bold text-xl sm:text-2xl text-white">BUYURTMA</h3>
+                            </div>
+                            <i class="fa-solid fa-parachute-box text-orange-400 text-xl"></i>
+                        </div>
+
+                        <!-- Order Details -->
+                        <div class="space-y-3.5 text-sm">
+                            <div class="flex justify-between items-center py-2 border-b border-orange-500/10">
+                                <span class="text-slate-400">Player ID:</span>
+                                <span id="summary-id" class="font-mono font-semibold text-slate-400">Kiritilmagan</span>
+                            </div>
+
+                            <div class="flex justify-between items-center py-2 border-b border-orange-500/10">
+                                <span class="text-slate-400">O'yinchi niki:</span>
+                                <span id="summary-nickname" class="font-semibold text-sky-400">—</span>
+                            </div>
+
+                            <div class="flex justify-between items-center py-2 border-b border-orange-500/10">
+                                <span class="text-slate-400">Tanlangan UC:</span>
+                                <span id="summary-package" class="font-bold text-orange-400">60 UC</span>
+                            </div>
+
+                            <div class="flex justify-between items-center py-2 border-b border-orange-500/10">
+                                <span class="text-slate-400">To'lov tizimi:</span>
+                                <span id="summary-payment" class="font-semibold text-white">Click</span>
+                            </div>
+
+                            <!-- Promo Code Input -->
+                            <div class="pt-1">
+                                <label class="text-xs text-slate-400 block mb-1.5">Promokod (AIRDROP10):</label>
+                                <div class="flex gap-2">
+                                    <input type="text" id="promo-input" placeholder="AIRDROP10" class="w-full bg-[#0b100d] border border-orange-500/30 rounded-lg px-3 py-2 text-xs text-white uppercase font-mono outline-none focus:border-orange-500">
+                                    <button onclick="applyPromo()" class="px-3.5 py-2 bg-[#0b100d] hover:bg-[#131c17] border border-orange-500/40 rounded-lg text-xs font-bold text-orange-400 transition-colors shrink-0">
+                                        QO'LLASH
+                                    </button>
+                                </div>
+                                <p id="promo-msg" class="text-[11px] mt-1.5 hidden"></p>
+                            </div>
+
+                            <!-- Total Price Box -->
+                            <div class="bg-[#0b100d] rounded-xl p-4 mt-4 border border-orange-500/20">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-400 font-medium">Jami summa:</span>
+                                    <div class="text-right">
+                                        <div id="summary-old-price" class="text-xs text-slate-500 line-through hidden"></div>
+                                        <div id="summary-total" class="font-gaming font-extrabold text-2xl sm:text-3xl text-orange-400">13,000 so'm</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Buy Now Button -->
+                        <button 
+                            onclick="initiatePurchase()" 
+                            class="w-full mt-6 py-4 px-6 pubg-btn text-base sm:text-lg flex items-center justify-center gap-2.5 font-black tracking-wider"
+                        >
+                            <i class="fa-solid fa-parachute-box animate-bounce"></i>
+                            <span>TO'LOVNI AMALGA OSHIRISH</span>
+                        </button>
+
+                        <p class="text-[11px] text-slate-500 text-center mt-3 flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-lock text-emerald-500"></i>
+                            Himoyalangan to'lov • 30 soniyada yetkaziladi
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- HOW IT WORKS & FAQ SECTION -->
+    <section id="how-it-works" class="py-14 sm:py-20 bg-[#0f1712] border-t border-orange-500/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-sky-400 text-xs font-bold uppercase tracking-widest bg-sky-500/10 px-3 py-1 rounded border border-sky-500/30">Tactic Guide</span>
+                <h2 class="font-gaming font-extrabold text-3xl sm:text-4xl text-white mt-2 uppercase tracking-wide">QANDAY ISHLAYDI?</h2>
+                <p class="text-slate-300 text-sm sm:text-base mt-2">Airdrop UC orqali hisobni to'ldirish atigi 3 ta oddiy qadamdan iborat</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
+                <div class="pubg-hud-box p-6 relative group hover:border-orange-500/60 transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-orange-500/20 border border-orange-500/40 text-orange-400 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-id-badge"></i>
+                    </div>
+                    <span class="absolute top-5 right-6 font-gaming font-extrabold text-4xl text-slate-800">01</span>
+                    <h3 class="font-gaming font-bold text-xl text-white mb-2">PLAYER ID TEKSHIRISH</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        PUBG Mobile profilingizdagi raqamli ID ni kiriting va "Tekshirish" tugmasi orqali o'yinchi nikingizni tasdiqlang.
+                    </p>
+                </div>
+
+                <div class="pubg-hud-box p-6 relative group hover:border-orange-500/60 transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-orange-500/20 border border-orange-500/40 text-orange-400 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                    <span class="absolute top-5 right-6 font-gaming font-extrabold text-4xl text-slate-800">02</span>
+                    <h3 class="font-gaming font-bold text-xl text-white mb-2">PAKET VA TO'LOV</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        O'zingizga mos UC miqdorini va qulay to'lov usulini (Click, Payme, Uzum, Humo/Uzcard) tanlang.
+                    </p>
+                </div>
+
+                <div class="pubg-hud-box p-6 relative group hover:border-orange-500/60 transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-sky-500/20 border border-sky-500/40 text-sky-400 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-parachute-box"></i>
+                    </div>
+                    <span class="absolute top-5 right-6 font-gaming font-extrabold text-4xl text-slate-800">03</span>
+                    <h3 class="font-gaming font-bold text-xl text-white mb-2">AIRDROPNI QABUL QILISH</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        To'lov tasdiqlanishi bilan 30 soniya ichida UC avtomatik tarzda PUBG Mobile hisobingizga tushadi.
+                    </p>
+                </div>
+            </div>
+
+            <!-- FAQ Accordion -->
+            <div class="max-w-3xl mx-auto">
+                <h3 class="font-gaming font-bold text-2xl text-white text-center mb-6 uppercase tracking-wider">KO'P BERILADIGAN SAVOLLAR</h3>
+                <div class="space-y-3">
+                    <details class="group bg-[#131c17] border border-orange-500/30 rounded-xl p-4 cursor-pointer">
+                        <summary class="flex items-center justify-between font-semibold text-white text-sm sm:text-base list-none">
+                            <span>Akkauntimga xavf yo'qmi? Ban bo'lmaymanmi?</span>
+                            <i class="fa-solid fa-chevron-down text-orange-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="text-slate-300 text-sm mt-3 pt-3 border-t border-orange-500/20 leading-relaxed">
+                            Mutlaqo xavfsiz! Barcha UC paketlari rasmiy Midasbuy hamkorlik tizimi orqali faqat Player ID bo'yicha yuboriladi. Parol so'ralmaydi.
+                        </p>
+                    </details>
+
+                    <details class="group bg-[#131c17] border border-orange-500/30 rounded-xl p-4 cursor-pointer">
+                        <summary class="flex items-center justify-between font-semibold text-white text-sm sm:text-base list-none">
+                            <span>UC qancha vaqtda hisobimga tushadi?</span>
+                            <i class="fa-solid fa-chevron-down text-orange-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="text-slate-300 text-sm mt-3 pt-3 border-t border-orange-500/20 leading-relaxed">
+                            Odatda to'lov amalga oshirilgandan so'ng 15-30 soniya ichida UC o'yin hisobingizda ko'rinadi.
+                        </p>
+                    </details>
+
+                    <details class="group bg-[#131c17] border border-orange-500/30 rounded-xl p-4 cursor-pointer">
+                        <summary class="flex items-center justify-between font-semibold text-white text-sm sm:text-base list-none">
+                            <span>Adashib boshqa ID ga to'lov qilsam nima bo'ladi?</span>
+                            <i class="fa-solid fa-chevron-down text-orange-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="text-slate-300 text-sm mt-3 pt-3 border-t border-orange-500/20 leading-relaxed">
+                            Shuning uchun 1-qadamda "Tekshirish" tugmasi orqali o'yinchi nikini ko'rsatamiz. To'lovdan oldin nik o'zingizga tegishli ekanligiga ishonch hosil qiling.
+                        </p>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="footer" class="bg-[#070b09] border-t border-orange-500/30 pt-12 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-orange-500/20">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-orange-400">
+                            <i class="fa-solid fa-parachute-box text-lg"></i>
+                        </div>
+                        <span class="font-gaming font-extrabold text-2xl text-white">AIRDROP <span class="text-orange-400">UC</span></span>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed max-w-sm mb-3">
+                        O'zbekistondagi eng tezkor PUBG Mobile UC do'koni. Airdrop tezligida hisobingizni to'ldiring va g'alaba qozoning!
+                    </p>
+                    <div class="inline-flex items-center gap-2 text-xs font-bold text-orange-400 bg-orange-500/10 border border-orange-500/30 px-3 py-1.5 rounded">
+                        <i class="fa-solid fa-award"></i> Halollik foydadan ustun
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div>
+                    <h4 class="font-gaming font-bold text-lg text-white uppercase tracking-wider mb-4">Bo'limlar</h4>
+                    <ul class="space-y-2.5 text-sm text-slate-300">
+                        <li><a href="#store-section" class="hover:text-orange-400 transition-colors">UC Paketlar</a></li>
+                        <li><a href="#how-it-works" class="hover:text-orange-400 transition-colors">Qanday ishlaydi</a></li>
+                        <li><button onclick="openHistoryModal()" class="hover:text-orange-400 transition-colors">Xaridlar tarixi</button></li>
+                        <li><button onclick="openIdHelpModal()" class="hover:text-orange-400 transition-colors">Player ID ni topish</button></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h4 class="font-gaming font-bold text-lg text-white uppercase tracking-wider mb-4">24/7 Qo'llab-quvvatlash</h4>
+                    <div class="mb-3 px-4 py-3 rounded-xl bg-[#131c17] border border-orange-500/30 text-sm text-slate-200">
+                        <div class="font-bold text-white mb-0.5">Rahimov Sardor</div>
+                        <a href="https://t.me/+998943191216" target="_blank" rel="noopener noreferrer" class="font-mono text-orange-400 hover:underline flex items-center gap-2 mt-1">
+                            <i class="fa-solid fa-phone text-xs"></i> +998 94 319 12 16
+                        </a>
+                    </div>
+                    <a href="https://t.me/+998943191216" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-4 py-3 rounded-xl bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/30 text-sky-400 font-semibold text-sm transition-all mb-4 w-full sm:w-auto">
+                        <i class="fa-brands fa-telegram text-xl"></i>
+                        <span>Telegram: +998 94 319 12 16</span>
+                    </a>
+                    <div class="flex items-center gap-3">
+                        <a href="https://t.me/+998943191216" target="_blank" rel="noopener noreferrer" aria-label="Telegram" class="w-10 h-10 rounded-xl bg-[#131c17] hover:bg-sky-600 text-slate-300 hover:text-white flex items-center justify-center transition-all border border-orange-500/30" title="Telegram: +998 94 319 12 16">
+                            <i class="fa-brands fa-telegram"></i>
+                        </a>
+                        <a href="https://instagram.com/re2itachi" target="_blank" rel="noopener noreferrer" aria-label="Instagram @re2itachi" class="w-10 h-10 rounded-xl bg-[#131c17] hover:bg-pink-600 text-slate-300 hover:text-white flex items-center justify-center transition-all border border-orange-500/30" title="Instagram: @re2itachi">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <button onclick="showYoutubeSoonModal()" aria-label="YouTube" class="w-10 h-10 rounded-xl bg-[#131c17] hover:bg-red-600 text-slate-300 hover:text-white flex items-center justify-center transition-all border border-orange-500/30 cursor-pointer" title="YouTube">
+                            <i class="fa-brands fa-youtube"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>&copy; 2026 AIRDROP UC. Barcha huquqlar himoyalangan.</p>
+                <p>PUBG Mobile — KRAFTON / Tencent Games savdo belgisi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL 5: YOUTUBE COMING SOON NOTICE -->
+    <div id="youtube-soon-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="pubg-hud-box border-red-500/50 max-w-sm w-full p-6 sm:p-7 shadow-2xl text-center relative overflow-hidden">
+            <div class="w-14 h-14 rounded-xl bg-red-600/20 border border-red-500/50 text-red-500 flex items-center justify-center text-2xl mx-auto mb-4 shadow-[0_0_20px_rgba(239,68,68,0.4)]">
+                <i class="fa-brands fa-youtube"></i>
+            </div>
+            <h3 class="font-gaming font-extrabold text-xl sm:text-2xl text-white mb-2">YouTube kanal</h3>
+            <p class="text-slate-300 text-sm mb-6 leading-relaxed">
+                Hozircha bu sahifa ishga tushmagan. Tez kunda ajoyib video va sharhlar bilan uchrashamiz!
+            </p>
+            <button onclick="closeYoutubeSoonModal()" class="w-full py-3 pubg-btn font-bold text-sm">
+                Tushunarli
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL 1: PURCHASE PROCESSING & RECEIPT -->
+    <div id="purchase-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="pubg-hud-box border-orange-500/60 max-w-md w-full p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+            
+            <!-- Processing View -->
+            <div id="modal-processing" class="text-center py-6">
+                <div class="relative w-20 h-20 mx-auto mb-5 flex items-center justify-center">
+                    <div class="absolute inset-0 border-4 border-orange-500/20 border-t-orange-500 rounded-full animate-spin"></div>
+                    <i class="fa-solid fa-parachute-box text-2xl text-orange-400 animate-bounce"></i>
+                </div>
+                <h3 class="font-gaming font-bold text-2xl text-white mb-2">Airdrop yuborilmoqda...</h3>
+                <p class="text-slate-300 text-sm">
+                    <span id="proc-payment-name" class="text-blue-400 font-semibold">Click</span> orqali to'lov tasdiqlanmoqda. Iltimos, kuting.
+                </p>
+            </div>
+
+            <!-- Success Receipt View -->
+            <div id="modal-success" class="hidden text-center">
+                <div class="w-16 h-16 rounded-xl bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center text-3xl mx-auto mb-4 shadow-[0_0_25px_rgba(16,185,129,0.4)]">
+                    <i class="fa-solid fa-parachute-box"></i>
+                </div>
+                
+                <h3 class="font-gaming font-extrabold text-2xl sm:text-3xl text-white mb-1">Airdrop yetkazildi!</h3>
+                <p class="text-slate-300 text-sm mb-5">UC o'yin hisobingizga muvaffaqiyatli tushirildi.</p>
+
+                <!-- Receipt Card -->
+                <div id="receipt-box" class="bg-[#07090e] border border-orange-500/30 rounded-xl p-4 text-left space-y-2.5 text-sm mb-5">
+                    <div class="flex justify-between items-center pb-2 border-b border-orange-500/20">
+                        <span class="text-slate-400">Buyurtma ID:</span>
+                        <span id="receipt-order-id" class="font-mono font-bold text-orange-400">#AD-84920</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">Player ID:</span>
+                        <span id="receipt-player-id" class="font-mono text-white font-semibold">5123456789</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">O'yinchi niki:</span>
+                        <span id="receipt-nickname" class="text-blue-400 font-semibold">AIRDROP_HUNTER</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">UC miqdori:</span>
+                        <span id="receipt-uc" class="text-white font-bold">60 UC</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">To'lov usuli:</span>
+                        <span id="receipt-payment" class="text-slate-200">Click</span>
+                    </div>
+                    <div class="flex justify-between pt-2 border-t border-orange-500/20">
+                        <span class="text-slate-400">To'langan summa:</span>
+                        <span id="receipt-price" class="text-emerald-400 font-bold">13,000 so'm</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="copyFullReceipt()" class="py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-semibold text-sm transition-all flex items-center justify-center gap-2">
+                        <i class="fa-regular fa-copy text-orange-400"></i>
+                        <span>Nusxalash</span>
+                    </button>
+                    <button onclick="closePurchaseModal()" class="py-3 px-4 pubg-btn font-extrabold text-sm">
+                        Yopish
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: ORDER HISTORY (LocalStorage) -->
+    <div id="history-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="pubg-hud-box max-w-lg w-full p-6 shadow-2xl">
+            <div class="flex items-center justify-between pb-4 border-b border-orange-500/20">
+                <h3 class="font-gaming font-bold text-2xl text-white flex items-center gap-2">
+                    <i class="fa-solid fa-clock-rotate-left text-orange-400"></i>
+                    Xaridlar tarixi
+                </h3>
+                <div class="flex items-center gap-3">
+                    <button id="clear-history-btn" onclick="clearOrderHistory()" class="text-xs text-red-400 hover:text-red-300 hidden">
+                        Tozalash
+                    </button>
+                    <button onclick="closeHistoryModal()" class="text-slate-400 hover:text-white p-1">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div id="history-list" class="my-4 max-h-80 overflow-y-auto space-y-3 pr-1">
+                <!-- Injected from LocalStorage -->
+            </div>
+
+            <button onclick="closeHistoryModal()" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm transition-colors">
+                Yopish
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL 3: PLAYER ID HELP -->
+    <div id="id-help-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="pubg-hud-box max-w-md w-full p-6 shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-orange-500/20">
+                <h3 class="font-gaming font-bold text-xl text-white">PUBG Player ID qayerda?</h3>
+                <button onclick="closeIdHelpModal()" class="text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="py-4 space-y-3 text-sm text-slate-300">
+                <p>1. <strong>PUBG Mobile</strong> o'yinini oching.</p>
+                <p>2. Yuqori chap burchakdagi <strong>Profil avataringizga</strong> bosing.</p>
+                <p>3. Nikneymingiz tepasida yozilgan 9–11 xonali raqamni (masalan: <span class="font-mono text-orange-400">5123456789</span>) nusxalab oling.</p>
+            </div>
+            <button onclick="closeIdHelpModal()" class="w-full py-3 pubg-btn font-bold text-sm">
+                Tushunarli
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL 4: LIVE API / PROXY CONFIGURATION -->
+    <div id="api-config-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="pubg-hud-box max-w-lg w-full p-6 shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-orange-500/20">
+                <h3 class="font-gaming font-bold text-xl text-white flex items-center gap-2">
+                    <i class="fa-solid fa-server text-blue-400"></i>
+                    PUBG Live API / Proxy Sozlamasi
+                </h3>
+                <button onclick="closeApiConfigModal()" class="text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="py-4 space-y-3 text-xs sm:text-sm text-slate-300">
+                <p>
+                    Rasmiy <strong>Midasbuy</strong> serverlari xavfsizlik sababli brauzer so'rovlarini cheklaydi. O'zingizning proxy manzilingizni ulashingiz mumkin:
+                </p>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Custom Lookup Endpoint URL:</label>
+                    <input type="url" id="custom-api-url" placeholder="https://api.sizning-saytingiz.uz/pubg/check?id=" class="w-full bg-[#07090e] border border-orange-500/30 rounded-lg px-3 py-2 text-xs text-white font-mono outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">API Bearer Key:</label>
+                    <input type="password" id="custom-api-key" placeholder="sk_live_airdrop_..." class="w-full bg-[#07090e] border border-orange-500/30 rounded-lg px-3 py-2 text-xs text-white font-mono outline-none focus:border-blue-500">
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="saveApiConfig()" class="flex-1 py-2.5 pubg-btn font-bold text-sm">
+                    SAQLASH
+                </button>
+                <button onclick="closeApiConfigModal()" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-sm">
+                    Yopish
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT APPLICATION LOGIC -->
+    <script>
+        const STORAGE_KEY = 'airdrop_uc_orders_v1';
+        const API_CFG_KEY = 'airdrop_uc_api_cfg_v1';
+
+        const ucPackages = [
+            { id: 'uc_60', baseUc: 60, bonusUc: 0, price: 13000, badge: null, popular: false },
+            { id: 'uc_180', baseUc: 180, bonusUc: 10, price: 37000, badge: '+10 Bonus', popular: false },
+            { id: 'uc_325', baseUc: 300, bonusUc: 25, price: 62000, badge: '+25 Bonus', popular: false },
+            { id: 'uc_660', baseUc: 600, bonusUc: 60, price: 122000, badge: 'Ommabop', popular: true },
+            { id: 'uc_1320', baseUc: 1200, bonusUc: 120, price: 242000, badge: '+120 Bonus', popular: false },
+            { id: 'uc_1800', baseUc: 1500, bonusUc: 300, price: 305000, badge: '+300 Bonus', popular: false },
+            { id: 'uc_3850', baseUc: 3000, bonusUc: 850, price: 610000, badge: '+850 Bonus', popular: false },
+            { id: 'uc_8100', baseUc: 6000, bonusUc: 2100, price: 1210000, badge: 'Eng foydali', popular: true }
+        ];
+
+        const paymentMethods = [
+            { id: 'click', name: 'Click', color: 'text-sky-400', icon: 'fa-solid fa-c' },
+            { id: 'payme', name: 'Payme', color: 'text-teal-400', icon: 'fa-solid fa-p' },
+            { id: 'uzum', name: 'Uzum Bank', color: 'text-purple-400', icon: 'fa-solid fa-u' },
+            { id: 'card', name: 'Humo / Uzcard', color: 'text-orange-400', icon: 'fa-regular fa-credit-card' }
+        ];
+
+        const knownPlayersDB = {
+            "5123456789": { nickname: "AIRDROP_HUNTER", region: "UZ / Global", badge: "Conqueror" },
+            "5892014421": { nickname: "TASHKENT_KING_UZ", region: "CIS / Global", badge: "Ace Dominator" },
+            "5147890234": { nickname: "POCHINKI_SNIPER", region: "Europe / Global", badge: "RP Max" },
+            "5392018411": { nickname: "SAMARKAND_WOLF", region: "UZ / Global", badge: "Ace Master" },
+            "5901234488": { nickname: "UZB_CYBER_PRO", region: "Asia / Global", badge: "Conqueror" },
+            "5120998773": { nickname: "FERGANA_LEGEND", region: "CIS / Global", badge: "Crown I" }
+        };
+
+        let state = {
+            playerId: '',
+            nickname: '',
+            region: 'Global',
+            isVerified: false,
+            selectedPackage: ucPackages[3],
+            selectedPayment: paymentMethods[0],
+            discountPercent: 0,
+            lastReceiptText: '',
+            orders: [],
+            apiConfig: { url: '', key: '' }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadOrdersFromStorage();
+            loadApiConfig();
+            renderPackages();
+            renderPayments();
+            updateSummary();
+            startLiveTicker();
+
+            const idInput = document.getElementById('player-id-input');
+            idInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') verifyPlayerId();
+            });
+
+            idInput.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                if (state.isVerified && e.target.value !== state.playerId) {
+                    state.isVerified = false;
+                    state.nickname = '';
+                    document.getElementById('player-result').classList.add('hidden');
+                    document.getElementById('api-fallback-box').classList.add('hidden');
+                    updateSummary();
+                }
+            });
+        });
+
+        function formatUZS(amount) {
+            return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " so'm";
+        }
+
+        function fillSampleId(sampleId) {
+            const input = document.getElementById('player-id-input');
+            input.value = sampleId || '5123456789';
+            verifyPlayerId();
+        }
+
+        async function fetchPubgNicknameFromEndpoints(playerId) {
+            const endpoints = [];
+            if (state.apiConfig.url) {
+                endpoints.push({
+                    url: `${state.apiConfig.url}${encodeURIComponent(playerId)}`,
+                    headers: state.apiConfig.key ? { 'Authorization': `Bearer ${state.apiConfig.key}` } : {}
+                });
+            }
+            endpoints.push(
+                { url: `https://api.isan.eu.org/nickname/pubgm?id=${encodeURIComponent(playerId)}`, headers: {} },
+                { url: `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://api.isan.eu.org/nickname/pubgm?id=${playerId}`)}`, headers: {} }
+            );
+
+            for (const ep of endpoints) {
+                const controller = new AbortController();
+                const timer = setTimeout(() => controller.abort(), 4500);
+                try {
+                    const res = await fetch(ep.url, {
+                        method: 'GET',
+                        headers: { 'Accept': 'application/json', ...ep.headers },
+                        signal: controller.signal
+                    });
+                    clearTimeout(timer);
+                    if (!res.ok) continue;
+
+                    const data = await res.json();
+                    const foundNick = data?.nickname || data?.name || data?.data?.nickname || data?.player?.name;
+                    if (foundNick && typeof foundNick === 'string' && foundNick.trim().length > 0) {
+                        return {
+                            nickname: foundNick.trim(),
+                            region: data?.region || data?.server || 'Global',
+                            avatar: data?.avatar || null,
+                            source: 'Jonli PUBG serveri'
+                        };
+                    }
+                } catch (err) {
+                    clearTimeout(timer);
+                }
+            }
+            return null;
+        }
+
+        async function verifyPlayerId() {
+            const input = document.getElementById('player-id-input');
+            const idVal = input.value.trim();
+            const errorBox = document.getElementById('player-error');
+            const resultBox = document.getElementById('player-result');
+            const fallbackBox = document.getElementById('api-fallback-box');
+            const btn = document.getElementById('verify-btn');
+
+            if (!idVal || idVal.length < 9 || idVal.length > 11) {
+                errorBox.classList.remove('hidden');
+                resultBox.classList.add('hidden');
+                fallbackBox.classList.add('hidden');
+                showToast("Player ID 9–11 ta raqamdan iborat bo'lishi kerak!", "error");
+                return;
+            }
+
+            errorBox.classList.add('hidden');
+            fallbackBox.classList.add('hidden');
+            const origHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>QIDIRILMOQDA...</span>`;
+
+            const liveProfile = await fetchPubgNicknameFromEndpoints(idVal);
+
+            btn.disabled = false;
+            btn.innerHTML = origHtml;
+
+            if (liveProfile) {
+                applyVerifiedPlayer(idVal, liveProfile.nickname, liveProfile.region, liveProfile.source, liveProfile.avatar);
+                showToast(`Jonli serverdan topildi: ${liveProfile.nickname}`, "success");
+                return;
+            }
+
+            if (knownPlayersDB[idVal]) {
+                const cached = knownPlayersDB[idVal];
+                applyVerifiedPlayer(idVal, cached.nickname, cached.region, "Tasdiqlangan PUBG bazasi");
+                showToast(`O'yinchi tasdiqlandi: ${cached.nickname}`, "success");
+                return;
+            }
+
+            state.playerId = idVal;
+            state.isVerified = false;
+            resultBox.classList.add('hidden');
+            fallbackBox.classList.remove('hidden');
+            document.getElementById('manual-nickname-input').focus();
+            showToast("PUBG API cheklovi aniqlandi. Nikni qo'lda tasdiqlang.", "info");
+        }
+
+        function applyVerifiedPlayer(idVal, nickname, region, sourceLabel, avatarUrl = null) {
+            state.playerId = idVal;
+            state.nickname = nickname;
+            state.region = region || 'Global';
+            state.isVerified = true;
+
+            document.getElementById('player-nickname').textContent = nickname;
+            document.getElementById('player-region-badge').textContent = state.region;
+            document.getElementById('verified-id-display').textContent = idVal;
+            document.getElementById('verification-source-label').textContent = sourceLabel;
+
+            const avatarBox = document.getElementById('player-avatar-box');
+            if (avatarUrl) {
+                avatarBox.innerHTML = `<img src="${avatarUrl}" alt="${nickname}" onerror="this.parentElement.innerHTML='<i class=\\'fa-solid fa-helmet-safety\\'></i>'" class="w-full h-full object-cover">`;
+            } else {
+                avatarBox.innerHTML = `<span>${nickname.slice(0, 2).toUpperCase()}</span>`;
+            }
+
+            document.getElementById('api-fallback-box').classList.add('hidden');
+            document.getElementById('player-result').classList.remove('hidden');
+            updateSummary();
+        }
+
+        function confirmManualNickname() {
+            const idVal = document.getElementById('player-id-input').value.trim();
+            const manualNickInput = document.getElementById('manual-nickname-input');
+            const customNick = manualNickInput.value.trim();
+
+            if (!idVal || idVal.length < 9) {
+                showToast("Avval 9–11 xonali Player ID kiriting.", "error");
+                return;
+            }
+            if (!customNick || customNick.length < 2) {
+                manualNickInput.focus();
+                showToast("Iltimos, o'yin ichidagi nikingizni yozing.", "error");
+                return;
+            }
+
+            applyVerifiedPlayer(idVal, customNick, "Global / CIS", "Qo'lda tasdiqlangan nik");
+            showToast(`Nik tasdiqlandi: ${customNick}`, "success");
+        }
+
+        function renderPackages() {
+            const grid = document.getElementById('packages-grid');
+            grid.innerHTML = ucPackages.map(pkg => {
+                const isSelected = state.selectedPackage.id === pkg.id;
+                const totalUc = pkg.baseUc + pkg.bonusUc;
+                return `
+                    <div 
+                        onclick="selectPackage('${pkg.id}')" 
+                        class="uc-card cursor-pointer relative rounded-xl bg-[#07090e] border ${isSelected ? 'selected border-orange-500' : 'border-orange-500/20 hover:border-orange-500/40'} p-3.5 sm:p-4 transition-all flex flex-col justify-between select-none"
+                    >
+                        ${pkg.badge ? `
+                            <span class="absolute -top-2.5 right-2.5 px-2 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wide ${pkg.popular ? 'bg-orange-500 text-black' : 'bg-blue-500/20 text-blue-300 border border-blue-500/30'}">
+                                ${pkg.badge}
+                            </span>
+                        ` : ''}
+                        <div class="flex items-center gap-2 mb-2 mt-1">
+                            <div class="w-7 h-7 rounded bg-orange-500/20 border border-orange-500/40 text-orange-400 flex items-center justify-center text-xs font-black">
+                                UC
+                            </div>
+                            <div>
+                                <div class="font-gaming font-extrabold text-lg sm:text-xl text-white leading-none">${totalUc} UC</div>
+                                ${pkg.bonusUc > 0 ? `<div class="text-[10px] text-emerald-400 font-semibold">${pkg.baseUc} + ${pkg.bonusUc} Bonus</div>` : `<div class="text-[10px] text-slate-500">Asosiy paket</div>`}
+                            </div>
+                        </div>
+                        <div class="pt-2 border-t border-orange-500/20 text-xs sm:text-sm font-bold text-orange-400">
+                            ${formatUZS(pkg.price)}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderPayments() {
+            const grid = document.getElementById('payment-grid');
+            grid.innerHTML = paymentMethods.map(pm => {
+                const isSelected = state.selectedPayment.id === pm.id;
+                return `
+                    <div 
+                        onclick="selectPayment('${pm.id}')" 
+                        class="payment-card cursor-pointer rounded-xl bg-[#07090e] border ${isSelected ? 'selected border-blue-500' : 'border-orange-500/20 hover:border-orange-500/40'} p-3.5 sm:p-4 transition-all flex flex-col items-center justify-center text-center gap-2 select-none"
+                    >
+                        <div class="w-10 h-10 rounded-full bg-[#0e1420] border border-orange-500/30 flex items-center justify-center text-lg font-bold ${pm.color}">
+                            <i class="${pm.icon}"></i>
+                        </div>
+                        <span class="text-xs sm:text-sm font-semibold text-white">${pm.name}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function selectPackage(pkgId) {
+            const found = ucPackages.find(p => p.id === pkgId);
+            if (found) {
+                state.selectedPackage = found;
+                renderPackages();
+                updateSummary();
+            }
+        }
+
+        function selectPayment(pmId) {
+            const found = paymentMethods.find(p => p.id === pmId);
+            if (found) {
+                state.selectedPayment = found;
+                renderPayments();
+                updateSummary();
+            }
+        }
+
+        function quickApplyPromo(code) {
+            const input = document.getElementById('promo-input');
+            input.value = code;
+            applyPromo();
+            document.getElementById('store-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function applyPromo() {
+            const code = document.getElementById('promo-input').value.trim().toUpperCase();
+            const msg = document.getElementById('promo-msg');
+
+            if (code === 'AIRDROP10' || code === 'UZBEK10') {
+                state.discountPercent = 10;
+                msg.textContent = `${code} qo'llanildi — 10% chegirma!`;
+                msg.className = "text-[11px] mt-1.5 text-emerald-400 block font-semibold";
+                showToast("10% chegirma muvaffaqiyatli qo'llanildi!", "success");
+            } else {
+                state.discountPercent = 0;
+                msg.textContent = "Noto'g'ri promokod (Sinab ko'ring: AIRDROP10)";
+                msg.className = "text-[11px] mt-1.5 text-red-400 block";
+            }
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const totalUc = state.selectedPackage.baseUc + state.selectedPackage.bonusUc;
+            const rawPrice = state.selectedPackage.price;
+            const finalPrice = state.discountPercent > 0
+                ? Math.round(rawPrice * (1 - state.discountPercent / 100))
+                : rawPrice;
+
+            const sumId = document.getElementById('summary-id');
+            sumId.textContent = state.isVerified ? state.playerId : "Kiritilmagan";
+            sumId.className = state.isVerified ? "font-mono font-bold text-white" : "font-mono text-slate-500";
+
+            document.getElementById('summary-nickname').textContent = state.isVerified ? state.nickname : "—";
+            document.getElementById('summary-package').textContent = `${totalUc} UC`;
+            document.getElementById('summary-payment').textContent = state.selectedPayment.name;
+
+            const oldPriceEl = document.getElementById('summary-old-price');
+            if (state.discountPercent > 0) {
+                oldPriceEl.textContent = formatUZS(rawPrice);
+                oldPriceEl.classList.remove('hidden');
+            } else {
+                oldPriceEl.classList.add('hidden');
+            }
+
+            document.getElementById('summary-total').textContent = formatUZS(finalPrice);
+        }
+
+        function initiatePurchase() {
+            const inputVal = document.getElementById('player-id-input').value.trim();
+
+            if (!inputVal || inputVal.length < 9) {
+                document.getElementById('player-id-input').focus();
+                showToast("Avval 9–11 xonali PUBG Mobile Player ID ni kiriting!", "error");
+                return;
+            }
+
+            if (!state.isVerified) {
+                verifyPlayerId();
+                return;
+            }
+
+            const modal = document.getElementById('purchase-modal');
+            const procDiv = document.getElementById('modal-processing');
+            const succDiv = document.getElementById('modal-success');
+
+            document.getElementById('proc-payment-name').textContent = state.selectedPayment.name;
+            procDiv.classList.remove('hidden');
+            succDiv.classList.add('hidden');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            setTimeout(() => {
+                const orderNum = "#AD-" + Math.floor(10000 + Math.random() * 90000);
+                const totalUc = state.selectedPackage.baseUc + state.selectedPackage.bonusUc;
+                const finalPrice = state.discountPercent > 0
+                    ? Math.round(state.selectedPackage.price * (1 - state.discountPercent / 100))
+                    : state.selectedPackage.price;
+                const formattedPrice = formatUZS(finalPrice);
+
+                document.getElementById('receipt-order-id').textContent = orderNum;
+                document.getElementById('receipt-player-id').textContent = state.playerId;
+                document.getElementById('receipt-nickname').textContent = state.nickname;
+                document.getElementById('receipt-uc').textContent = `${totalUc} UC`;
+                document.getElementById('receipt-payment').textContent = state.selectedPayment.name;
+                document.getElementById('receipt-price').textContent = formattedPrice;
+
+                state.lastReceiptText = `AIRDROP UC CHEK\nBuyurtma: ${orderNum}\nPlayer ID: ${state.playerId} (${state.nickname})\nPaket: ${totalUc} UC\nTo'lov: ${state.selectedPayment.name} — ${formattedPrice}`;
+
+                const newOrder = {
+                    orderNum,
+                    playerId: state.playerId,
+                    nickname: state.nickname,
+                    uc: `${totalUc} UC`,
+                    price: formattedPrice,
+                    payment: state.selectedPayment.name,
+                    date: new Date().toLocaleString('uz-UZ', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })
+                };
+                state.orders.unshift(newOrder);
+                saveOrdersToStorage();
+
+                procDiv.classList.add('hidden');
+                succDiv.classList.remove('hidden');
+            }, 1500);
+        }
+
+        function closePurchaseModal() {
+            const modal = document.getElementById('purchase-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function copyFullReceipt() {
+            const textarea = document.createElement('textarea');
+            textarea.value = state.lastReceiptText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            showToast("To'lov cheki nusxalandi!", "success");
+        }
+
+        function loadOrdersFromStorage() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) state.orders = JSON.parse(saved);
+            } catch (e) {
+                state.orders = [];
+            }
+            updateOrderBadge();
+        }
+
+        function saveOrdersToStorage() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state.orders));
+            } catch (e) {}
+            updateOrderBadge();
+        }
+
+        function updateOrderBadge() {
+            document.getElementById('order-count-badge').textContent = state.orders.length;
+        }
+
+        function openHistoryModal() {
+            const list = document.getElementById('history-list');
+            const clearBtn = document.getElementById('clear-history-btn');
+
+            if (state.orders.length === 0) {
+                clearBtn.classList.add('hidden');
+                list.innerHTML = `
+                    <div class="text-center py-10 text-slate-400">
+                        <i class="fa-solid fa-parachute-box text-3xl mb-2 text-slate-600"></i>
+                        <p class="text-sm">Hozircha xaridlar tarixi bo'sh.</p>
+                    </div>
+                `;
+            } else {
+                clearBtn.classList.remove('hidden');
+                list.innerHTML = state.orders.map(o => `
+                    <div class="bg-[#07090e] border border-orange-500/20 rounded-xl p-3.5 flex items-center justify-between gap-3">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono text-xs text-orange-400 font-bold">${o.orderNum}</span>
+                                <span class="text-[11px] text-slate-500">• ${o.date}</span>
+                            </div>
+                            <div class="text-white font-bold text-sm mt-0.5">${o.uc} <span class="text-slate-400 font-normal">→ ${o.nickname} (${o.playerId})</span></div>
+                        </div>
+                        <div class="text-right shrink-0">
+                            <div class="text-emerald-400 font-bold text-xs">${o.price}</div>
+                            <span class="inline-block mt-1 px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-semibold">Yetkazildi</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            const modal = document.getElementById('history-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function clearOrderHistory() {
+            state.orders = [];
+            saveOrdersToStorage();
+            openHistoryModal();
+            showToast("Xaridlar tarixi tozalandi.", "info");
+        }
+
+        function closeHistoryModal() {
+            const modal = document.getElementById('history-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function openIdHelpModal() {
+            const modal = document.getElementById('id-help-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeIdHelpModal() {
+            const modal = document.getElementById('id-help-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function showYoutubeSoonModal() {
+            const modal = document.getElementById('youtube-soon-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeYoutubeSoonModal() {
+            const modal = document.getElementById('youtube-soon-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function loadApiConfig() {
+            try {
+                const saved = localStorage.getItem(API_CFG_KEY);
+                if (saved) state.apiConfig = JSON.parse(saved);
+            } catch (e) {
+                state.apiConfig = { url: '', key: '' };
+            }
+        }
+
+        function openApiConfigModal() {
+            document.getElementById('custom-api-url').value = state.apiConfig.url || '';
+            document.getElementById('custom-api-key').value = state.apiConfig.key || '';
+            const modal = document.getElementById('api-config-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeApiConfigModal() {
+            const modal = document.getElementById('api-config-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function saveApiConfig() {
+            const url = document.getElementById('custom-api-url').value.trim();
+            const key = document.getElementById('custom-api-key').value.trim();
+            state.apiConfig = { url, key };
+            try {
+                localStorage.setItem(API_CFG_KEY, JSON.stringify(state.apiConfig));
+            } catch (e) {}
+            closeApiConfigModal();
+            showToast("API / Proxy sozlamalari saqlandi!", "success");
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+
+            let colors = 'bg-[#0e1420] border-orange-500/40 text-white';
+            let icon = 'fa-circle-info text-blue-400';
+
+            if (type === 'success') {
+                colors = 'bg-[#0e1420] border-emerald-500/50 text-emerald-100';
+                icon = 'fa-circle-check text-emerald-400';
+            } else if (type === 'error') {
+                colors = 'bg-[#0e1420] border-red-500/50 text-red-100';
+                icon = 'fa-circle-exclamation text-red-400';
+            }
+
+            toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl border shadow-2xl backdrop-blur-md text-xs sm:text-sm font-medium transition-all duration-300 ${colors}`;
+            toast.innerHTML = `<i class="fa-solid ${icon} text-base"></i><span>${message}</span>`;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(20px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function startLiveTicker() {
+            const tickerEl = document.getElementById('live-ticker');
+            const feed = [
+                { id: "5184***920", uc: "660 UC" },
+                { id: "5392***114", uc: "325 UC" },
+                { id: "5901***448", uc: "1800 UC" },
+                { id: "5120***773", uc: "60 UC" },
+                { id: "5744***309", uc: "3850 UC" }
+            ];
+            let idx = 0;
+            setInterval(() => {
+                idx = (idx + 1) % feed.length;
+                tickerEl.innerHTML = `ID: ${feed[idx].id} — <span class="text-orange-400">${feed[idx].uc}</span> muvaffaqiyatli tushdi!`;
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
